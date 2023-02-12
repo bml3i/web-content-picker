@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group 'bi.leo'
+version '1.0-SNAPSHOT'
+
+
+def mySubProject = [
+    project(':svc-web-content-picker')
+]
+
+configure(mySubProject) {
+    println "Hello My Sub Project - ${project.name}"
+}
+
+allprojects {
+    println "Hello Project - ${project.name}"
+
+    apply plugin:'java'
+}
+
+subprojects {
+    println "Hello Sub Project - ${project.name}"
+
+    if (['svc-web-content-picker'].contains(project.name)) {
+        println "[TEST] Do some work only for this project - ${project.name}"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}

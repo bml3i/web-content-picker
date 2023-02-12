@@ -1,0 +1,4 @@
+rootProject.name = 'web-content-picker'
+include 'svc-web-content-picker'
+include 'common-web-content-picker'
+

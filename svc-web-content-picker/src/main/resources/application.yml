@@ -1,0 +1,39 @@
+spring:
+  config:
+    activate:
+      on-profile: default
+environment: default env
+web-driver:
+  name: webdriver.gecko.driver
+  location: /Users/e5/firefoxdriver_mac_arm64/geckodriver
+  headless: true
+  initial-pool-size: 1
+  max-pool-size: 3
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+environment: DEV env
+web-driver:
+  name: webdriver.chrome.driver
+  location: /Users/e5/chromedriver_mac_arm64/chromedriver
+  headless: true
+  initial-pool-size: 1
+  max-pool-size: 3
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+environment: PROD env
+web-driver:
+  name: webdriver.gecko.driver
+  location: /firefoxdriver_mac_arm64/geckodriver
+  headless: true
+  initial-pool-size: 1
+  max-pool-size: 3

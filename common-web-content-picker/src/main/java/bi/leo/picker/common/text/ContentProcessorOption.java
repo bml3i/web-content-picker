@@ -2,16 +2,17 @@ package bi.leo.picker.common.text;
 
 public class ContentProcessorOption {
 
-    public static final int OPTION_REMOVE_SPACES            = 0B0000000001;
+    public static final int OPTION_REMOVE_SPACE             = 0B0000000001;
     public static final int OPTION_REMOVE_COMMA             = 0B0000000010;
     public static final int OPTION_TRIM                     = 0B0000000100;
+    public static final int OPTION_READ_NUMBER              = 0B0000001000;
 
 
     public ContentProcessorOption(int optionDigit) {
 
         this.optionDigit = optionDigit;
 
-        if ((optionDigit & OPTION_REMOVE_SPACES) > 0) {
+        if ((optionDigit & OPTION_REMOVE_SPACE) > 0) {
             this.removeSpaceEnabled = true;
         }
 
@@ -23,6 +24,10 @@ public class ContentProcessorOption {
             this.trimEnabled = true;
         }
 
+        if ((optionDigit & OPTION_READ_NUMBER) > 0) {
+            this.readNumberEnabled = true;
+        }
+
     }
 
     private int optionDigit;
@@ -32,6 +37,8 @@ public class ContentProcessorOption {
     private boolean removeCommaEnabled;
 
     private boolean trimEnabled;
+
+    private boolean readNumberEnabled;
 
     public boolean isRemoveSpaceEnabled() {
         return removeSpaceEnabled;
@@ -66,6 +73,17 @@ public class ContentProcessorOption {
         return this;
     }
 
+    public boolean isReadNumberEnabled() {
+        return readNumberEnabled;
+    }
+
+    public ContentProcessorOption setReadNumberEnabled(boolean readNumberEnabled) {
+        this.readNumberEnabled = readNumberEnabled;
+
+        this.calculateOptionDigit();
+        return this;
+    }
+
     public int getOptionDigit() {
         return optionDigit;
     }
@@ -76,7 +94,7 @@ public class ContentProcessorOption {
         optionDigit = 0;
 
         if (this.isRemoveSpaceEnabled()) {
-            optionDigit = optionDigit | OPTION_REMOVE_SPACES;
+            optionDigit = optionDigit | OPTION_REMOVE_SPACE;
         }
 
         if (this.isRemoveCommaEnabled()) {
@@ -85,6 +103,10 @@ public class ContentProcessorOption {
 
         if (this.isTrimEnabled()) {
             optionDigit = optionDigit | OPTION_TRIM;
+        }
+
+        if (this.isReadNumberEnabled()) {
+            optionDigit = optionDigit | OPTION_READ_NUMBER;
         }
 
     }

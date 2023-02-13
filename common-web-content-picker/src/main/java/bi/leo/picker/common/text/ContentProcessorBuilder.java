@@ -27,6 +27,10 @@ public class ContentProcessorBuilder {
             contentProcessorList.add(new TrimContentProcessor());
         }
 
+        if (option.isReadNumberEnabled()) {
+            contentProcessorList.add(new ReadNumberContentProcessor());
+        }
+
         return contentProcessorList;
     }
 

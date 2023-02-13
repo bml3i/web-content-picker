@@ -9,7 +9,7 @@ public class ExtractRequest {
 
     private String extractUrl;
 
-    private String extractType; // xpath
+    private Integer extractOption;
 
     private String extractExpression;
 

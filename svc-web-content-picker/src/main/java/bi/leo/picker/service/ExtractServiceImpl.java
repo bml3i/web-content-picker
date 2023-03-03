@@ -3,7 +3,7 @@ package bi.leo.picker.service;
 import bi.leo.picker.common.text.Content;
 import bi.leo.picker.common.text.ContentProcessorAgent;
 import bi.leo.picker.common.text.ContentProcessorOption;
-import bi.leo.picker.exception.WebDriverPoolException;
+import bi.leo.picker.exception.CustomWebDriverException;
 import bi.leo.picker.model.ExtractRequest;
 import bi.leo.picker.model.ExtractResult;
 import org.openqa.selenium.By;
@@ -12,19 +12,17 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 public class ExtractServiceImpl implements ExtractService{
 
     @Autowired
-    WebDriverPoolManager webDriverPoolManager;
+    WebDriverManager webDriverManager;
 
     @Override
-    public ExtractResult extractFieldValue(ExtractRequest extractRequest) throws WebDriverPoolException{
+    public ExtractResult extractFieldValue(ExtractRequest extractRequest) throws CustomWebDriverException {
         WebDriver webDriver = null;
         try {
-            webDriver = webDriverPoolManager.getWebDriver();
+            webDriver = webDriverManager.getWebDriver();
 
             webDriver.get(extractRequest.getExtractUrl());
 
@@ -44,12 +42,12 @@ public class ExtractServiceImpl implements ExtractService{
             }
 
             return extractResult;
-        } catch (WebDriverPoolException e) {
+        } catch (CustomWebDriverException e) {
             e.printStackTrace();
             throw e;
         } finally {
             if(webDriver != null) {
-                webDriverPoolManager.releaseWebDriver(webDriver);
+                webDriver.quit();
             }
         }
     }

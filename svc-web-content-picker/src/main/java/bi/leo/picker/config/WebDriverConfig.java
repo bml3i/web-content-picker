@@ -13,12 +13,10 @@ public class WebDriverConfig {
 
     private String name;
 
-    private String location;
+    private String type;
 
-    private Boolean headless;
+    private String browserVersion;
 
-    private Integer initialPoolSize;
-
-    private Integer maxPoolSize;
+    private String gridUrl;
 
 }

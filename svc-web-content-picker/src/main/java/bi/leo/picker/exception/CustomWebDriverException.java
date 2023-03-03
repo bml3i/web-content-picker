@@ -5,17 +5,17 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class WebDriverPoolException extends Exception {
+public class CustomWebDriverException extends Exception {
 
     private String errorCode;
 
     private String errorMessage;
 
-    public WebDriverPoolException() {
+    public CustomWebDriverException() {
         super();
     }
 
-    public WebDriverPoolException(String code, String message) {
+    public CustomWebDriverException(String code, String message) {
         super();
         this.errorCode = code;
         this.errorMessage = message;

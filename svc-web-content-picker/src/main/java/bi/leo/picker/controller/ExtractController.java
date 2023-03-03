@@ -1,6 +1,6 @@
 package bi.leo.picker.controller;
 
-import bi.leo.picker.exception.WebDriverPoolException;
+import bi.leo.picker.exception.CustomWebDriverException;
 import bi.leo.picker.model.ExtractRequest;
 import bi.leo.picker.model.ExtractResult;
 import bi.leo.picker.model.ResponseResult;
@@ -22,7 +22,7 @@ public class ExtractController {
     }
 
     @RequestMapping(value = "/extract", method=RequestMethod.POST)
-    public ResponseEntity extract(@RequestBody ExtractRequest extractRequest) throws WebDriverPoolException {
+    public ResponseEntity extract(@RequestBody ExtractRequest extractRequest) throws CustomWebDriverException {
 
         ExtractResult extractResult = extractService.extractFieldValue(extractRequest);
 

@@ -2,13 +2,27 @@ spring:
   config:
     activate:
       on-profile: default
+  sql:
+    init:
+      mode: never
+  datasource:
+    url: jdbc:h2:file:~/pickerdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      connection-timeout: 10000
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
 environment: default env
 web-driver:
-  name: webdriver.gecko.driver
-  location: /Users/e5/firefoxdriver_mac_arm64/geckodriver
-  headless: true
-  initial-pool-size: 1
-  max-pool-size: 3
+  name: Remote Chrome Driver
+  type: chrome
+  browser-version: 98.0
+  grid-url: http://localhost:4444
 
 ---
 
@@ -18,11 +32,10 @@ spring:
       on-profile: dev
 environment: DEV env
 web-driver:
-  name: webdriver.chrome.driver
-  location: /Users/e5/chromedriver_mac_arm64/chromedriver
-  headless: true
-  initial-pool-size: 1
-  max-pool-size: 3
+  name: Remote Chrome Driver
+  type: chrome
+  browser-version: 98.0
+  grid-url: http://localhost:4444
 
 ---
 
@@ -32,8 +45,7 @@ spring:
       on-profile: prod
 environment: PROD env
 web-driver:
-  name: webdriver.gecko.driver
-  location: /firefoxdriver_mac_arm64/geckodriver
-  headless: true
-  initial-pool-size: 1
-  max-pool-size: 3
+  name: Remote Chrome Driver
+  type: chrome
+  browser-version: 98.0
+  grid-url: http://localhost:4444

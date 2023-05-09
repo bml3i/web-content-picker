@@ -28,7 +28,7 @@ public class ExtractController {
     }
 
     @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
-    @GetMapping(path = "/user")
+    @GetMapping(path = "/userinfo")
     @ResponseBody
     public ObjectNode getUserInfo() {
         ObjectNode objectNode = objectMapper.createObjectNode();

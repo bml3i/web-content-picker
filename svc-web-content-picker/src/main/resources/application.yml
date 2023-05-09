@@ -2,9 +2,9 @@ spring:
   config:
     activate:
       on-profile: default
-  sql:
-    init:
-      mode: never
+  jpa:
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:h2:file:~/pickerdb
     driver-class-name: org.h2.Driver
@@ -15,6 +15,7 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2-console
       settings:
         web-allow-others: true
 environment: default env

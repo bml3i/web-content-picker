@@ -1,11 +1,13 @@
 package bi.leo.picker.controller;
 
+import bi.leo.picker.dto.AuthResponseDto;
 import bi.leo.picker.dto.UserLoginDto;
 import bi.leo.picker.dto.UserRegisterDto;
 import bi.leo.picker.entity.Role;
 import bi.leo.picker.entity.User;
 import bi.leo.picker.repository.RoleRepository;
 import bi.leo.picker.repository.UserRepository;
+import bi.leo.picker.service.JWTGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,9 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JWTGenerator jwtGenerator;
+
     @PostMapping("register")
     public ResponseEntity<String> userRegister(@RequestBody UserRegisterDto userRegisterDto) {
         if(userRepository.existsByName(userRegisterDto.getUsername())) {
@@ -55,13 +60,15 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> userLogin(@RequestBody UserLoginDto userLoginDto) {
+    public ResponseEntity<AuthResponseDto> userLogin(@RequestBody UserLoginDto userLoginDto) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userLoginDto.getUsername(), userLoginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        String token = jwtGenerator.generateToken(authentication);
+
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 }

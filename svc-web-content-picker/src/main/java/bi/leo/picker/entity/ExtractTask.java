@@ -20,7 +20,25 @@ public class ExtractTask {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private LocalDateTime creationDateTime;
+    private String extractUrl;
+
+    private String extractExpression;
+
+    private Integer extractOption;
+
+    private LocalDateTime nextRunDateTime;
+
+    // HOURLY, DAILY, MINUTELY
+    private String taskType;
+
+    // unit: second
+    private Integer taskInterval;
+
+    private Boolean activeFlag;
+
+    private LocalDateTime createDateTime;
+
+    private LocalDateTime updateDateTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "task_history_map")

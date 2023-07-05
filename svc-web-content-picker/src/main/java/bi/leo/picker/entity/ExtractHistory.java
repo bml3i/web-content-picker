@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "extract_hist")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class ExtractHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
-
-
 
 }

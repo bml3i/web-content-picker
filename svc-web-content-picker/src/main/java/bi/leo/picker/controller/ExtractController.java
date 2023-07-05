@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RestController
 public class ExtractController {
 
@@ -21,13 +22,12 @@ public class ExtractController {
     @Autowired
     ObjectMapper objectMapper;
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
+
     @GetMapping("/hello")
     public String hello() {
         return "hello";
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
     @GetMapping(path = "/userinfo")
     @ResponseBody
     public ObjectNode getUserInfo() {
@@ -37,7 +37,6 @@ public class ExtractController {
         return objectNode;
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
     @RequestMapping(value = "/extract", method=RequestMethod.POST)
     public ResponseEntity extract(@RequestBody ExtractRequest extractRequest) throws CustomWebDriverException {
 

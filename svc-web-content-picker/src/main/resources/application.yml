@@ -4,7 +4,11 @@ spring:
       on-profile: default
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
   datasource:
     url: jdbc:h2:file:~/pickerdb
     driver-class-name: org.h2.Driver

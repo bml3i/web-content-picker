@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated() // TESTING ONLY, ENABLE THIS FOR PROD ENVIRONMENT
                 .and()
                 .httpBasic();
 

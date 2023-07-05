@@ -8,13 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
     @GetMapping(value = "/users")
     public ResponseEntity getUsers() {
         ResponseResult responseResult = new ResponseResult().buildSuccessMessage(userService.getUsers());
@@ -22,7 +22,6 @@ public class UserController {
         return new ResponseEntity(responseResult, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity saveUser(@RequestBody User user) {
         User newUser = userService.save(user);

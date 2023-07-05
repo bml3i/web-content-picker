@@ -1,5 +1,6 @@
 package bi.leo.picker.entity;
 
+import bi.leo.picker.dto.ExtractTaskDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,13 +27,13 @@ public class ExtractTask {
 
     private Integer extractOption;
 
-    private LocalDateTime nextRunDateTime;
-
     // HOURLY, DAILY, MINUTELY
     private String taskType;
 
     // unit: second
     private Integer taskInterval;
+
+    private LocalDateTime nextRunDateTime;
 
     private Boolean activeFlag;
 
@@ -44,4 +45,26 @@ public class ExtractTask {
     @JoinTable(name = "task_history_map")
     private List<ExtractHistory> extractHistories = new ArrayList<>();
 
+    // convert from DTO
+    public ExtractTask(ExtractTaskDto extractTaskDto) {
+        this.setId(extractTaskDto.getId());
+        this.setExtractUrl(extractTaskDto.getExtractUrl());
+        this.setExtractExpression(extractTaskDto.getExtractExpression());
+        this.setExtractOption(extractTaskDto.getExtractOption());
+        this.setTaskType(extractTaskDto.getTaskType());
+        this.setTaskInterval(extractTaskDto.getTaskInterval());
+        this.setActiveFlag(extractTaskDto.getActiveFlag());
+
+        // create a new one
+        if (extractTaskDto.getId() == null) {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            this.setCreateDateTime(currentDateTime);
+            this.setUpdateDateTime(currentDateTime);
+            this.setNextRunDateTime(currentDateTime.plusSeconds(30));
+        } else {
+            // update the existing one
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            this.setUpdateDateTime(currentDateTime);
+        }
+    }
 }

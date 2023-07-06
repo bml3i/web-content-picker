@@ -24,4 +24,8 @@ public class ExtractHistory {
     @Column(name = "create_dttm")
     private LocalDateTime createDateTime;
 
+    public ExtractHistory(String value, LocalDateTime createDateTime) {
+        this.value = value;
+        this.createDateTime = createDateTime;
+    }
 }

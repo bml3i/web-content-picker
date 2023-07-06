@@ -1,11 +1,15 @@
 package bi.leo.picker.service;
 
+import bi.leo.picker.entity.ExtractHistory;
 import bi.leo.picker.entity.ExtractTask;
 import bi.leo.picker.exception.CustomWebDriverException;
 import bi.leo.picker.model.ExtractRequest;
 import bi.leo.picker.model.ExtractResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class BatchService {
@@ -40,6 +44,8 @@ public class BatchService {
 
         if (extractResultValue != null) {
             // save result to extract history
+            List<ExtractHistory> extractHistoryList = extractTaskDB.getExtractHistories();
+            extractHistoryList.add(new ExtractHistory(extractResultValue, LocalDateTime.now()));
 
             // reset next run date time
             extractTaskDB.resetNextRunDateTime(extractTaskDB.getTaskInterval());

@@ -21,6 +21,10 @@ public class ScheduledService {
 
     public static final int THREAD_COUNT_MINUTELY = 8;
 
+    public static final int THREAD_COUNT_HOURLY = 2;
+
+    public static final int THREAD_COUNT_DAILY = 2;
+
     public static final String TASK_TYPE_MINUTELY = "MINUTELY";
 
     public static final String TASK_TYPE_HOURLY = "HOURLY";

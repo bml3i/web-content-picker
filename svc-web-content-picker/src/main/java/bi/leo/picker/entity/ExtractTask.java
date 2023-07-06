@@ -48,6 +48,23 @@ public class ExtractTask {
     @JoinTable(name = "task_history_map")
     private List<ExtractHistory> extractHistories = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "ExtractTask{" +
+                "id=" + id +
+                ", extractUrl='" + extractUrl + '\'' +
+                ", extractExpression='" + extractExpression + '\'' +
+                ", extractOption=" + extractOption +
+                ", taskType='" + taskType + '\'' +
+                ", taskInterval=" + taskInterval +
+                ", nextRunDateTime=" + nextRunDateTime +
+                ", activeFlag=" + activeFlag +
+                ", processStatus='" + processStatus + '\'' +
+                ", createDateTime=" + createDateTime +
+                ", updateDateTime=" + updateDateTime +
+                '}';
+    }
+
     // convert from DTO
     public ExtractTask(ExtractTaskDto extractTaskDto) {
         this.setId(extractTaskDto.getId());

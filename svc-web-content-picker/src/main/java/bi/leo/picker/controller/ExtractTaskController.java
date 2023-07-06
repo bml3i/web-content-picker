@@ -31,6 +31,13 @@ public class ExtractTaskController {
         return new ResponseEntity(responseResult, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/api/readyExtractTasks/{taskType}")
+    public ResponseEntity getExtractTasks(@PathVariable String taskType) {
+        ResponseResult responseResult = new ResponseResult().buildSuccessMessage(extractTaskService.getReadyExtractTasksByType(taskType));
+
+        return new ResponseEntity(responseResult, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/api/user/{userId}/extractTasks", method = RequestMethod.POST)
     public ResponseEntity saveExtractTask(@RequestBody ExtractTaskDto extractTaskDto, @PathVariable String userId) {
 

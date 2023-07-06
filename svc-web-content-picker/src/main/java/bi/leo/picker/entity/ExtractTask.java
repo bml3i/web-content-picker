@@ -37,6 +37,9 @@ public class ExtractTask {
 
     private Boolean activeFlag;
 
+    // C = Completed, I = In-Process, F = Failure
+    private String processStatus;
+
     private LocalDateTime createDateTime;
 
     private LocalDateTime updateDateTime;
@@ -57,6 +60,7 @@ public class ExtractTask {
 
         // create a new one
         if (extractTaskDto.getId() == null) {
+            this.setProcessStatus("C");
             LocalDateTime currentDateTime = LocalDateTime.now();
             this.setCreateDateTime(currentDateTime);
             this.setUpdateDateTime(currentDateTime);

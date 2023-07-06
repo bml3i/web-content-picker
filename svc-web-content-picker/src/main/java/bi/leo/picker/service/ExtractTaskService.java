@@ -8,4 +8,6 @@ public interface ExtractTaskService {
 
     public List<ExtractTask> getExtractTasks();
 
+    public List<ExtractTask> getReadyExtractTasksByType(String type);
+
 }

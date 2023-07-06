@@ -17,4 +17,9 @@ public class ExtractTaskServiceImpl implements ExtractTaskService{
     public List<ExtractTask> getExtractTasks() {
         return extractTaskRepository.findAll();
     }
+
+    @Override
+    public List<ExtractTask> getReadyExtractTasksByType(String type) {
+        return extractTaskRepository.getReadyExtractTasksByType(type);
+    }
 }

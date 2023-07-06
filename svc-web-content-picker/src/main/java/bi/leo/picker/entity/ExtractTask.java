@@ -88,4 +88,15 @@ public class ExtractTask {
             this.setUpdateDateTime(currentDateTime);
         }
     }
+
+    public void resetNextRunDateTime(int bufferInSecond) {
+        if (bufferInSecond <= 0) {
+            return;
+        }
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        while (this.nextRunDateTime.isBefore(currentDateTime)) {
+            this.nextRunDateTime = this.nextRunDateTime.plusSeconds(bufferInSecond);
+        }
+    }
 }

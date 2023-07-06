@@ -13,7 +13,10 @@ public class ScheduledService {
     @Autowired
     ExtractTaskService extractTaskService;
 
-    @Scheduled(fixedDelay = 5000)
+    @Autowired
+    BatchService batchService;
+
+    @Scheduled(fixedDelay = 30000)
     public void ExtractTaskHandler01() {
 
         String taskType = "MINUTELY";
@@ -22,10 +25,9 @@ public class ScheduledService {
 
         List<ExtractTask> readyExtractTasks = extractTaskService.getReadyExtractTasksByType(taskType);
 
-
-
         System.out.println(readyExtractTasks);
 
+        readyExtractTasks.stream().forEach((item) -> batchService.handleExtractTask(item));
 
     }
 }

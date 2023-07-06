@@ -15,6 +15,13 @@ public class ExtractTaskServiceImpl implements ExtractTaskService{
     @Autowired
     private ExtractTaskRepository extractTaskRepository;
 
+
+    @Override
+    public ExtractTask getExtractTaskById(Long id) {
+        // TODO
+        return extractTaskRepository.findById(id).get();
+    }
+
     @Override
     public List<ExtractTask> getExtractTasks() {
         return extractTaskRepository.findAll();
@@ -25,5 +32,10 @@ public class ExtractTaskServiceImpl implements ExtractTaskService{
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<String> processStatus = Arrays.asList("C", "F");
         return extractTaskRepository.getReadyExtractTasksByType(type, currentDateTime, processStatus);
+    }
+
+    @Override
+    public ExtractTask save(ExtractTask extractTask) {
+        return extractTaskRepository.save(extractTask);
     }
 }

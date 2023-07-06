@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface ExtractTaskService {
 
+    public ExtractTask getExtractTaskById(Long id);
+
     public List<ExtractTask> getExtractTasks();
 
     public List<ExtractTask> getReadyExtractTasksByType(String type);
+
+    public ExtractTask save(ExtractTask extractTask);
 
 }

@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduledService {
@@ -16,7 +19,7 @@ public class ScheduledService {
     @Autowired
     BatchService batchService;
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 5000)
     public void ExtractTaskHandler01() {
 
         String taskType = "MINUTELY";
@@ -27,7 +30,17 @@ public class ScheduledService {
 
         System.out.println(readyExtractTasks);
 
-        readyExtractTasks.stream().forEach((item) -> batchService.handleExtractTask(item));
+        // readyExtractTasks.stream().forEach((item) -> batchService.handleExtractTask(item));
 
+        CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
+                        () -> {
+                            return batchService.handleExtractTask(item);
+                        }).whenComplete((s, e) -> {
+                })
+        ).toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(futureList).join();
+
+        System.out.println("ExtractTaskHandler01 finished - " + System.currentTimeMillis() / 1000);
     }
 }

@@ -5,7 +5,6 @@ import bi.leo.picker.exception.CustomWebDriverException;
 import bi.leo.picker.model.ExtractRequest;
 import bi.leo.picker.model.ExtractResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +16,7 @@ public class BatchService {
     @Autowired
     ExtractTaskService extractTaskService;
 
-    @Async
-    public void handleExtractTask(ExtractTask extractTask) {
+    public Long handleExtractTask(ExtractTask extractTask) {
 
         // Mark the Extract Task status to In-Process first
         ExtractTask extractTaskDB = extractTaskService.getExtractTaskById(extractTask.getId());
@@ -48,6 +46,8 @@ public class BatchService {
         }
 
         extractTaskService.save(extractTaskDB);
+
+       return extractTaskDB.getId();
     }
 
 }

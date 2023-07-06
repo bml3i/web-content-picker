@@ -21,27 +21,37 @@ public class ExtractTask {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "ext_url")
     private String extractUrl;
 
+    @Column(name = "ext_expr")
     private String extractExpression;
 
+    @Column(name = "ext_opt")
     private Integer extractOption;
 
     // HOURLY, DAILY, MINUTELY
+    @Column(name = "tsk_typ")
     private String taskType;
 
     // unit: second
+    @Column(name = "tsk_inr")
     private Integer taskInterval;
 
+    @Column(name = "next_run_dttm")
     private LocalDateTime nextRunDateTime;
 
+    @Column(name = "active_flg")
     private Boolean activeFlag;
 
     // C = Completed, I = In-Process, F = Failure
+    @Column(name = "proc_stat")
     private String processStatus;
 
+    @Column(name = "create_dttm")
     private LocalDateTime createDateTime;
 
+    @Column(name = "upd_dttm")
     private LocalDateTime updateDateTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

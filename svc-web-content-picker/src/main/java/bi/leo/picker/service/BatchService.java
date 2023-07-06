@@ -34,8 +34,9 @@ public class BatchService {
             extractTaskDB.setProcessStatus("F");
         }
 
+        Long extractTaskId = extractTaskDB.getId();
         String extractResultValue = extractResult.getValue();
-        System.out.println("extractResultValue: " + extractResultValue);
+        System.out.println("extractTaskId[" + extractTaskId + "]" + " - extractResultValue: " + extractResultValue);
 
         if (extractResultValue != null) {
             // save result to extract history

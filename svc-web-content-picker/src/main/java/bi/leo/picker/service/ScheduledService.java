@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @Service
 public class ScheduledService {
@@ -19,28 +19,87 @@ public class ScheduledService {
     @Autowired
     BatchService batchService;
 
-    @Scheduled(fixedDelay = 5000)
+    public static final int THREAD_COUNT_MINUTELY = 8;
+
+    public static final String TASK_TYPE_MINUTELY = "MINUTELY";
+
+    public static final String TASK_TYPE_HOURLY = "HOURLY";
+
+    public static final String TASK_TYPE_DAILY = "DAILY";
+
+
+    @Scheduled(fixedDelay = 15000)
     public void ExtractTaskHandler01() {
 
-        String taskType = "MINUTELY";
+        String taskType = TASK_TYPE_MINUTELY;
 
-        System.out.println("ExtractTaskHandler01 started - " + System.currentTimeMillis() / 1000);
+        System.out.println("ScheduledService.ExtractTaskHandler01 started - " + System.currentTimeMillis() / 1000);
 
         List<ExtractTask> readyExtractTasks = extractTaskService.getReadyExtractTasksByType(taskType);
 
-        System.out.println(readyExtractTasks);
+        System.out.println("ScheduledService.ExtractTaskHandler01 - readyExtractTasks.size() = " + readyExtractTasks.size());
 
-        // readyExtractTasks.stream().forEach((item) -> batchService.handleExtractTask(item));
+        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_MINUTELY);
 
         CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
                         () -> {
                             return batchService.handleExtractTask(item);
-                        }).whenComplete((s, e) -> {
+                        }, executor).whenComplete((s, e) -> {
                 })
         ).toArray(CompletableFuture[]::new);
 
         CompletableFuture.allOf(futureList).join();
 
-        System.out.println("ExtractTaskHandler01 finished - " + System.currentTimeMillis() / 1000);
+        System.out.println("ScheduledService.ExtractTaskHandler01 finished - " + System.currentTimeMillis() / 1000);
+    }
+
+    @Scheduled(fixedDelay = 30000)
+    public void ExtractTaskHandler02() {
+
+        String taskType = TASK_TYPE_HOURLY;
+
+        System.out.println("ScheduledService.ExtractTaskHandler02 started - " + System.currentTimeMillis() / 1000);
+
+        List<ExtractTask> readyExtractTasks = extractTaskService.getReadyExtractTasksByType(taskType);
+
+        System.out.println("ScheduledService.ExtractTaskHandler02 - readyExtractTasks.size() = " + readyExtractTasks.size());
+
+        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_MINUTELY);
+
+        CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
+                        () -> {
+                            return batchService.handleExtractTask(item);
+                        }, executor).whenComplete((s, e) -> {
+                })
+        ).toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(futureList).join();
+
+        System.out.println("ScheduledService.ExtractTaskHandler02 finished - " + System.currentTimeMillis() / 1000);
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void ExtractTaskHandler03() {
+
+        String taskType = TASK_TYPE_DAILY;
+
+        System.out.println("ScheduledService.ExtractTaskHandler03 started - " + System.currentTimeMillis() / 1000);
+
+        List<ExtractTask> readyExtractTasks = extractTaskService.getReadyExtractTasksByType(taskType);
+
+        System.out.println("ScheduledService.ExtractTaskHandler03 - readyExtractTasks.size() = " + readyExtractTasks.size());
+
+        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_MINUTELY);
+
+        CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
+                        () -> {
+                            return batchService.handleExtractTask(item);
+                        }, executor).whenComplete((s, e) -> {
+                })
+        ).toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(futureList).join();
+
+        System.out.println("ScheduledService.ExtractTaskHandler03 finished - " + System.currentTimeMillis() / 1000);
     }
 }

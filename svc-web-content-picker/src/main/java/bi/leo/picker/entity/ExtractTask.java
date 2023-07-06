@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "extract_task")
@@ -54,6 +55,12 @@ public class ExtractTask {
     @Column(name = "upd_dttm")
     private LocalDateTime updateDateTime;
 
+    @Column(name = "share_flg")
+    private Boolean shareFlag;
+
+    @Column(name = "uuid")
+    private String uuid;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "task_history_map")
     private List<ExtractHistory> extractHistories = new ArrayList<>();
@@ -72,6 +79,8 @@ public class ExtractTask {
                 ", processStatus='" + processStatus + '\'' +
                 ", createDateTime=" + createDateTime +
                 ", updateDateTime=" + updateDateTime +
+                ", shareFlag=" + shareFlag +
+                ", uuid='" + uuid + '\'' +
                 '}';
     }
 
@@ -84,6 +93,7 @@ public class ExtractTask {
         this.setTaskType(extractTaskDto.getTaskType());
         this.setTaskInterval(extractTaskDto.getTaskInterval());
         this.setActiveFlag(extractTaskDto.getActiveFlag());
+        this.setShareFlag(extractTaskDto.getShareFlag());
 
         // create a new one
         if (extractTaskDto.getId() == null) {
@@ -92,6 +102,10 @@ public class ExtractTask {
             this.setCreateDateTime(currentDateTime);
             this.setUpdateDateTime(currentDateTime);
             this.setNextRunDateTime(currentDateTime.plusSeconds(10));
+
+            if(extractTaskDto.getShareFlag()) {
+                this.setUuid(UUID.randomUUID().toString());
+            }
         } else {
             // update the existing one
             LocalDateTime currentDateTime = LocalDateTime.now();

@@ -20,4 +20,7 @@ public class ExtractTaskDto {
     private Integer taskInterval;
 
     private Boolean activeFlag;
+
+    private Boolean shareFlag;
+
 }

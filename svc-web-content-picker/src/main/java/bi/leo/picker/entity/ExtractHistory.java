@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "extract_hist")
@@ -17,6 +18,10 @@ public class ExtractHistory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    @Column(name = "val")
+    private String value;
+
+    @Column(name = "create_dttm")
+    private LocalDateTime createDateTime;
 
 }

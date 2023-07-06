@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ExtractTaskRepository extends JpaRepository<ExtractTask, Long> {
 
-    @Query("SELECT et FROM ExtractTask et WHERE et.taskType = :type AND et.nextRunDateTime <= :currentDateTime")
-    List<ExtractTask> getReadyExtractTasksByType(String type, LocalDateTime currentDateTime);
+    @Query("SELECT et FROM ExtractTask et " + "WHERE et.taskType = :type " +
+            "AND et.nextRunDateTime <= :currentDateTime AND et.processStatus IN :processStatus " +
+            "AND et.activeFlag = TRUE")
+    List<ExtractTask> getReadyExtractTasksByType(String type, LocalDateTime currentDateTime, List<String> processStatus);
 
 }

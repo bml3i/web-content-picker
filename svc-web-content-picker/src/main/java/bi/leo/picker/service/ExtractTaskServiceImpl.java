@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,9 +22,8 @@ public class ExtractTaskServiceImpl implements ExtractTaskService{
 
     @Override
     public List<ExtractTask> getReadyExtractTasksByType(String type) {
-
         LocalDateTime currentDateTime = LocalDateTime.now();
-
-        return extractTaskRepository.getReadyExtractTasksByType(type, currentDateTime);
+        List<String> processStatus = Arrays.asList("C", "F");
+        return extractTaskRepository.getReadyExtractTasksByType(type, currentDateTime, processStatus);
     }
 }

@@ -81,7 +81,7 @@ public class ExtractTask {
             LocalDateTime currentDateTime = LocalDateTime.now();
             this.setCreateDateTime(currentDateTime);
             this.setUpdateDateTime(currentDateTime);
-            this.setNextRunDateTime(currentDateTime.plusSeconds(30));
+            this.setNextRunDateTime(currentDateTime.plusSeconds(10));
         } else {
             // update the existing one
             LocalDateTime currentDateTime = LocalDateTime.now();

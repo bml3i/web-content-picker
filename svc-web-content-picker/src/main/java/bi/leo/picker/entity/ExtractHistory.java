@@ -28,4 +28,6 @@ public class ExtractHistory {
         this.value = value;
         this.createDateTime = createDateTime;
     }
+
+
 }

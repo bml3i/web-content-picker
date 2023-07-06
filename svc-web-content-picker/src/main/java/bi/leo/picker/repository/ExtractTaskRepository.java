@@ -14,4 +14,5 @@ public interface ExtractTaskRepository extends JpaRepository<ExtractTask, Long> 
             "AND et.activeFlag = TRUE")
     List<ExtractTask> getReadyExtractTasksByType(String type, LocalDateTime currentDateTime, List<String> processStatus);
 
+    ExtractTask findByUuid(String uuid);
 }

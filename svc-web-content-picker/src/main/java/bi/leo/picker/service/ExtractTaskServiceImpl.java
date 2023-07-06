@@ -1,5 +1,6 @@
 package bi.leo.picker.service;
 
+import bi.leo.picker.entity.ExtractHistory;
 import bi.leo.picker.entity.ExtractTask;
 import bi.leo.picker.repository.ExtractTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class ExtractTaskServiceImpl implements ExtractTaskService{
+public class ExtractTaskServiceImpl implements ExtractTaskService {
 
     @Autowired
     private ExtractTaskRepository extractTaskRepository;
@@ -37,5 +38,22 @@ public class ExtractTaskServiceImpl implements ExtractTaskService{
     @Override
     public ExtractTask save(ExtractTask extractTask) {
         return extractTaskRepository.save(extractTask);
+    }
+
+    @Override
+    public ExtractHistory getRecentExtractHistoryByUuid(String uuid) {
+        ExtractTask extractTask = extractTaskRepository.findByUuid(uuid);
+
+        if (extractTask != null && extractTask.getExtractHistories() != null) {
+            return extractTask.getExtractHistories().stream().reduce((first, second) -> {
+                if (first.getCreateDateTime().isBefore(second.getCreateDateTime())) {
+                    return second;
+                } else {
+                    return first;
+                }
+            }).orElse(null);
+        } else {
+            return null;
+        }
     }
 }

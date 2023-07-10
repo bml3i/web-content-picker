@@ -16,7 +16,26 @@ services:
     labels:
       - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
 
+  hub:
+    ports:
+      - '4442-4444:4442-4444'
+    container_name: seleniarm-hub-prod
+    image: 'seleniarm/hub:4.1.2-20220222'
+
+
+  node-chromium:
+    environment:
+      - SE_EVENT_BUS_HOST=seleniarm-hub-prod
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=20
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    container_name: seleniarm-node-prod
+    image: 'seleniarm/node-chromium:4.1.2-20220222'
+
+
   web-content-picker:
     image: leobi/web-content-picker
     ports:
       - "8080:8080"
+

@@ -1,7 +1,5 @@
+
 spring:
-  config:
-    activate:
-      on-profile: default
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -34,10 +32,32 @@ web-driver:
 spring:
   config:
     activate:
+      on-profile: dev
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+environment: DEV env
+
+---
+
+spring:
+  config:
+    activate:
       on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
 environment: PROD env
 web-driver:
   name: Remote Chrome Driver
   type: chrome
   browser-version: 98.0
-  grid-url: http://localhost:4444
+  grid-url: http://seleniarm-hub:4444

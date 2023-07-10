@@ -68,7 +68,7 @@ public class ScheduledService {
 
         System.out.println("ScheduledService.ExtractTaskHandler02 - readyExtractTasks.size() = " + readyExtractTasks.size());
 
-        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_MINUTELY);
+        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_HOURLY);
 
         CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
                         () -> {
@@ -93,7 +93,7 @@ public class ScheduledService {
 
         System.out.println("ScheduledService.ExtractTaskHandler03 - readyExtractTasks.size() = " + readyExtractTasks.size());
 
-        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_MINUTELY);
+        Executor executor = Executors.newFixedThreadPool(THREAD_COUNT_DAILY);
 
         CompletableFuture[] futureList = readyExtractTasks.stream().map(item -> CompletableFuture.supplyAsync(
                         () -> {

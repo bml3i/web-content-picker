@@ -15,7 +15,7 @@ services:
     # A container that exposes an API to show its IP address
     image: traefik/whoami
     labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.rule=Host(`ip.xsoftbase.com`)"
 
   hub:
     ports:
@@ -44,4 +44,5 @@ services:
     image: leobi/web-content-picker
     ports:
       - "8080:8080"
-
+    labels:
+      - "traefik.http.routers.web-content-picker.rule=Host(`www.xsoftbase.com`)"

@@ -7,8 +7,10 @@ plugins {
 group 'bi.leo'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
 
 configurations {
     compileOnly {

@@ -14,5 +14,8 @@ public interface ExtractTaskRepository extends JpaRepository<ExtractTask, Long> 
             "AND et.activeFlag = TRUE")
     List<ExtractTask> getReadyExtractTasksByType(String type, LocalDateTime currentDateTime, List<String> processStatus);
 
+    @Query("SELECT et FROM ExtractTask et WHERE et.updateDateTime <= :obsoleteDateTime AND et.processStatus IN :processStatus")
+    List<ExtractTask> getObsoleteExtractTasks(LocalDateTime obsoleteDateTime, List<String> processStatus);
+
     ExtractTask findByUuid(String uuid);
 }

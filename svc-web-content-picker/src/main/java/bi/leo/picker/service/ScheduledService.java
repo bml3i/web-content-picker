@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -105,5 +106,24 @@ public class ScheduledService {
         CompletableFuture.allOf(futureList).join();
 
         System.out.println("ScheduledService.ExtractTaskHandler03 finished - " + System.currentTimeMillis() / 1000);
+    }
+
+    @Scheduled(fixedDelay = 60000 * 30)
+    public void ResetExtractTaskStatusJob() {
+
+        System.out.println("ScheduledService.ResetExtractTaskStatusJob started - " + System.currentTimeMillis() / 1000);
+
+        List<ExtractTask> obsoleteExtractTasks = extractTaskService.getObsoleteExtractTasks();
+
+        System.out.println("ScheduledService.ResetExtractTaskStatusJob - obsoleteExtractTasks.size() = " + obsoleteExtractTasks.size());
+
+        obsoleteExtractTasks.forEach(item -> {
+            // Reset Extract Task status
+            item.setProcessStatus("F");
+            item.setUpdateDateTime(LocalDateTime.now());
+            extractTaskService.save(item);
+        });
+
+        System.out.println("ScheduledService.ResetExtractTaskStatusJob finished - " + System.currentTimeMillis() / 1000);
     }
 }

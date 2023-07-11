@@ -17,4 +17,6 @@ public interface ExtractTaskService {
 
     public ExtractHistory getRecentExtractHistoryByUuid(String uuid);
 
+    public List<ExtractTask> getObsoleteExtractTasks();
+
 }

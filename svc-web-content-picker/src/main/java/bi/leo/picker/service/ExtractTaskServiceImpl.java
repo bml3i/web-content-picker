@@ -56,4 +56,12 @@ public class ExtractTaskServiceImpl implements ExtractTaskService {
             return null;
         }
     }
+
+    @Override
+    public List<ExtractTask> getObsoleteExtractTasks() {
+        LocalDateTime currentDateTime = LocalDateTime.now().minusMinutes(30);
+        List<String> processStatus = Arrays.asList("I");
+        return extractTaskRepository.getObsoleteExtractTasks(currentDateTime, processStatus);
+    }
+
 }

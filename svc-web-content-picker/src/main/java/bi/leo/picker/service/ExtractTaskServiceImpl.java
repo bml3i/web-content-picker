@@ -30,7 +30,7 @@ public class ExtractTaskServiceImpl implements ExtractTaskService {
 
     @Override
     public List<ExtractTask> getReadyExtractTasksByType(String type) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now().withNano(0);
         List<String> processStatus = Arrays.asList("C", "F");
         return extractTaskRepository.getReadyExtractTasksByType(type, currentDateTime, processStatus);
     }
@@ -59,7 +59,7 @@ public class ExtractTaskServiceImpl implements ExtractTaskService {
 
     @Override
     public List<ExtractTask> getObsoleteExtractTasks() {
-        LocalDateTime currentDateTime = LocalDateTime.now().minusMinutes(30);
+        LocalDateTime currentDateTime = LocalDateTime.now().withNano(0).minusMinutes(30);
         List<String> processStatus = Arrays.asList("I");
         return extractTaskRepository.getObsoleteExtractTasks(currentDateTime, processStatus);
     }

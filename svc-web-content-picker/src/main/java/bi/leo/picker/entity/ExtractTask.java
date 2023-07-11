@@ -98,7 +98,7 @@ public class ExtractTask {
         // create a new one
         if (extractTaskDto.getId() == null) {
             this.setProcessStatus("C");
-            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime currentDateTime = LocalDateTime.now().withNano(0);
             this.setCreateDateTime(currentDateTime);
             this.setUpdateDateTime(currentDateTime);
             this.setNextRunDateTime(currentDateTime.plusSeconds(10));
@@ -108,7 +108,7 @@ public class ExtractTask {
             }
         } else {
             // update the existing one
-            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime currentDateTime = LocalDateTime.now().withNano(0);
             this.setUpdateDateTime(currentDateTime);
         }
     }
@@ -118,7 +118,7 @@ public class ExtractTask {
             return;
         }
 
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now().withNano(0);
         while (this.nextRunDateTime.isBefore(currentDateTime)) {
             this.nextRunDateTime = this.nextRunDateTime.plusSeconds(bufferInSecond);
         }

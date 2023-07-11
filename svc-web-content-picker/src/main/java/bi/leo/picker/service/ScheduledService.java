@@ -120,7 +120,7 @@ public class ScheduledService {
         obsoleteExtractTasks.forEach(item -> {
             // Reset Extract Task status
             item.setProcessStatus("F");
-            item.setUpdateDateTime(LocalDateTime.now());
+            item.setUpdateDateTime(LocalDateTime.now().withNano(0));
             extractTaskService.save(item);
         });
 

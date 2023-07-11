@@ -25,7 +25,7 @@ public class BatchService {
         // Mark the Extract Task status to In-Process first
         ExtractTask extractTaskDB = extractTaskService.getExtractTaskById(extractTask.getId());
         extractTaskDB.setProcessStatus("I");
-        extractTaskDB.setUpdateDateTime(LocalDateTime.now());
+        extractTaskDB.setUpdateDateTime(LocalDateTime.now().withNano(0));
 
         extractTaskDB = extractTaskService.save(extractTaskDB);
 
@@ -37,7 +37,7 @@ public class BatchService {
         } catch (CustomWebDriverException e) {
             // handle this exception
             extractTaskDB.setProcessStatus("F");
-            extractTaskDB.setUpdateDateTime(LocalDateTime.now());
+            extractTaskDB.setUpdateDateTime(LocalDateTime.now().withNano(0));
         }
 
         Long extractTaskId = extractTaskDB.getId();
@@ -47,11 +47,11 @@ public class BatchService {
         if (extractResultValue != null) {
             // save result to extract history
             List<ExtractHistory> extractHistoryList = extractTaskDB.getExtractHistories();
-            extractHistoryList.add(new ExtractHistory(extractResultValue, LocalDateTime.now()));
+            extractHistoryList.add(new ExtractHistory(extractResultValue, LocalDateTime.now().withNano(0)));
 
             // reset next run date time
             extractTaskDB.resetNextRunDateTime(extractTaskDB.getTaskInterval());
-            extractTaskDB.setUpdateDateTime(LocalDateTime.now());
+            extractTaskDB.setUpdateDateTime(LocalDateTime.now().withNano(0));
             extractTaskDB.setProcessStatus("C");
         }
 

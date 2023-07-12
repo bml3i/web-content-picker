@@ -45,4 +45,4 @@ services:
     ports:
       - "8080:8080"
     labels:
-      - "traefik.http.routers.web-content-picker.rule=Host(`www.xsoftbase.com`)"
+      - "traefik.http.routers.web-content-picker.rule=Host(`svc.xsoftbase.com`)"

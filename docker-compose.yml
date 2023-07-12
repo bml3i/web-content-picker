@@ -46,3 +46,10 @@ services:
       - "8080:8080"
     labels:
       - "traefik.http.routers.web-content-picker.rule=Host(`svc.xsoftbase.com`)"
+
+  web-picker-angular-app:
+    image: leobi/web-picker-angular-app
+    ports:
+      - "4200:4200"
+    labels:
+      - "traefik.http.routers.web-picker-angular-app.rule=Host(`www.xsoftbase.com`)"
